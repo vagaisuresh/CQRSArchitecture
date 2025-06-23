@@ -10,4 +10,11 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CQRS.Application\CQRS.Application.csproj" />
+    <ProjectReference Include="..\CQRS.Infrastructure\CQRS.Infrastructure.csproj" />
+    <ProjectReference Include="..\CQRS.Persistence\CQRS.Persistence.csproj" />
+    <ProjectReference Include="..\CQRS.Shared\CQRS.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
