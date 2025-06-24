@@ -12,16 +12,30 @@ public class ToDoRepository : RepositoryBase, IToDoRepository
     {
     }
 
-    public async Task<List<ToDoItem>> GetAllAsync()
+    public async Task<IEnumerable<ToDoItem>> GetAllAsync()
     {
         return await _context.ToDoItems
             .AsNoTracking()
             .ToListAsync();
     }
 
+    public async Task<ToDoItem?> GetByIdAsync(int id)
+    {
+        return await _context.ToDoItems.FindAsync(id);
+    }
+
     public async Task CreateAsync(ToDoItem toDoItem)
     {
         await _context.ToDoItems.AddAsync(toDoItem);
-        await _context.SaveChangesAsync();
+    }
+
+    public void UpdateAsync(ToDoItem toDoItem)
+    {
+        _context.ToDoItems.Update(toDoItem);
+    }
+
+    public void DeleteAsync(ToDoItem toDoItem)
+    {
+        _context.ToDoItems.Remove(toDoItem);
     }
 }

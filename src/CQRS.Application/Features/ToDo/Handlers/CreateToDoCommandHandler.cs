@@ -5,15 +5,19 @@ using MediatR;
 
 namespace CQRS.Application.Features.ToDo.Handlers;
 
-public class CreateToDoCommandHandler(IToDoRepository toDoRepository) : IRequestHandler<CreateToDoCommand>
+public class CreateToDoCommandHandler(IUnitOfWork _unitOfWork) : IRequestHandler<CreateToDoCommand, ToDoItem?>
 {
-    public Task Handle(CreateToDoCommand command, CancellationToken cancellationToken)
+    public async Task<ToDoItem?> Handle(CreateToDoCommand command, CancellationToken cancellationToken)
     {
         var toDoItem = new ToDoItem
         {
-            Description = command.Description
+            Description = command.Description,
+            IsDone = true
         };
+        
+        await _unitOfWork.ToDoRepository.CreateAsync(toDoItem);
+        await _unitOfWork.SaveAsync();
 
-        return toDoRepository.CreateAsync(toDoItem);
+        return toDoItem;
     }
 }

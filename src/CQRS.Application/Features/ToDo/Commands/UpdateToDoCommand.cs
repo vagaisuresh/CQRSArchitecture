@@ -1,10 +1,10 @@
-using CQRS.Domain.Entities;
 using MediatR;
 
 namespace CQRS.Application.Features.ToDo.Commands;
 
-public class CreateToDoCommand : IRequest<ToDoItem>
+public class UpdateToDoCommand : IRequest
 {
+    public int Id { get; set; }
     public required string Description { get; set; }
     public bool IsDone { get; set; }
 }

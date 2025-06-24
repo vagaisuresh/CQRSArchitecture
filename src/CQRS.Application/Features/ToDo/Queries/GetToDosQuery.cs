@@ -3,6 +3,6 @@ using MediatR;
 
 namespace CQRS.Application.Features.ToDo.Queries;
 
-public class ToDoQuery : IRequest<List<ToDoItem>>
+public record GetToDosQuery : IRequest<IEnumerable<ToDoItem>>
 {
 }
