@@ -9,4 +9,6 @@ public interface IUnitOfWork : IDisposable
     /// </summary>
     /// <returns></returns>
     Task SaveAsync();
+
+    Task SaveAsync(CancellationToken cancellationToken);
 }

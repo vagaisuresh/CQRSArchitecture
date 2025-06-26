@@ -20,7 +20,13 @@ public class UnitOfWork : IUnitOfWork
 
     public async Task SaveAsync()
     {
-        await _context.SaveChangesAsync();
+        //await _context.SaveChangesAsync();
+        await SaveAsync(CancellationToken.None);
+    }
+
+    public async Task SaveAsync(CancellationToken cancellationToken)
+    {
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
     /// <summary>

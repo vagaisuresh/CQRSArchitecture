@@ -7,11 +7,11 @@ namespace CQRS.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ToDoController : ControllerBase
+public class ToDosController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public ToDoController(IMediator mediator)
+    public ToDosController(IMediator mediator)
     {
         _mediator = mediator;
     }
@@ -23,7 +23,7 @@ public class ToDoController : ControllerBase
 
         if (toDos == null || !toDos.Any())
             return NoContent();
-        
+
         return Ok(toDos);
     }
 
@@ -32,12 +32,12 @@ public class ToDoController : ControllerBase
     {
         if (id == 0)
             return BadRequest("Invalid id provided.");
-        
+
         var toDo = await _mediator.Send(new GetToDoByIdQuery(id));
 
         if (toDo == null)
             return NotFound();
-        
+
         return Ok(toDo);
     }
 
@@ -46,12 +46,12 @@ public class ToDoController : ControllerBase
     {
         if (!ModelState.IsValid)
             return BadRequest("Invalid data received.");
-        
+
         var createdToDo = await _mediator.Send(createToDoCommand);
 
         if (createdToDo == null)
             return BadRequest("ToDo creation failed.");
-        
+
         return CreatedAtRoute("GetToDoById", new { id = createdToDo.Id }, createdToDo);
     }
 
@@ -60,7 +60,7 @@ public class ToDoController : ControllerBase
     {
         if (!ModelState.IsValid)
             return BadRequest("Invalid data received.");
-        
+
         if (id <= 0 || id != updateToDoCommand.Id)
             return BadRequest("Invalid id provided.");
 
@@ -75,6 +75,20 @@ public class ToDoController : ControllerBase
             return BadRequest("Invalid id.");
 
         await _mediator.Send(new DeleteToDoCommand(id));
+        return NoContent();
+    }
+
+    [HttpPatch("{id}/complete")]
+    public async Task<IActionResult> CompleteAsync(int id)
+    {
+        if (id == 0)
+            return BadRequest("Invalid id.");
+        
+        var result = await _mediator.Send(new CompleteToDoCommand(id));
+
+        if (!result)
+            return NotFound("ToDo item not found.");
+        
         return NoContent();
     }
 }

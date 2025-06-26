@@ -1,5 +1,61 @@
-# CQRSArchitecture
-CQRS and MediatR in ASP.NET Core
+
+> ⚠️ **Warning**: This repository is still under development. Features may change or break without notice.
+
+---
+
+
+# CQRS and MediatR in ASP.NET Core
+
+An implementation of **Clean Architecture** using CQRS (Command Query Responsibility Segregation) pattern and MediatR library in **ASP.NET Core**, structured to promote scalability, maintainability, and testability. This project demonstrates the separation of concerns through clearly defined layers—**Domain, Application, Infrastructure,** and **API**—and follows industry best practices such as the **Repository pattern, Unit of Work,** and **SOLID principles**, making the codebase modular and easy to extend.
+
+---
+
+## Features
+
+- ✅ Clean Architecture with CQRS and MediatR
+- ✅ CRUD operations implemented using clean controllers
+- ✅ SQL Server for data persistence
+- ✅ Repository and Unit of Work patterns for data access
+- ✅ Easily extensible, maintainable, and testable codebase
+
+---
+
+## Tech Stack
+
+- **ASP.NET Core Web API**
+- **Entity Framework Core**
+- **SQL Server**
+- **IUnitOfWork & Repository Pattern**
+- **SOLID Principles**
+
+---
+
+## Endpoints Overview
+
+| Method | URL                         | Description                     |
+|--------|-----------------------------|---------------------------------|
+| GET    | /api/todos                  | List all ToDos.                 |
+| GET    | /api/todos/{id}             | Get particular ToDo by ID       |
+| POST   | /api/todos                  | Add new ToDo                    |
+| PUT    | /api/todos/{id}             | Update existing ToDo by ID      |
+| DELETE | /api/todos/{id}             | Delete an existing ToDo by ID   |
+| PATCH  | /api/todos/{id}/complete    | Set as finished (done)          |
+
+## Application Architecture
+
+- Controllers handle HTTP requests
+- Services encapsulate business logic
+- Repositories manage data access per DB
+- MS SQL Server database used
+
+
+
+
+---
+
+# CQRS with MediatR
+
+### ✅ Project Folder Structure
 
 MyEnterpriseApp.sln
 |
@@ -17,7 +73,7 @@ MyEnterpriseApp.sln
 |
 └── README.md
 
-# ✅ src/MyApp.API – Presentation Layer (Web API)
+### ✅ src/MyApp.API – Presentation Layer (Web API)
 
 MyApp.API/
 ├── Controllers/
@@ -28,7 +84,7 @@ MyApp.API/
 ├── appsettings.json
 └── MyApp.API.csproj
 
-# ✅ src/MyApp.Application – Application Layer
+### ✅ src/MyApp.Application – Application Layer
 
 MyApp.Application/
 ├── Interfaces/                  → Contracts for services, repos, etc.
@@ -47,7 +103,7 @@ MyApp.Application/
 
 ---
 
-# ✅ src/MyApp.API – Presentation Layer (Web API)
+### ✅ src/MyApp.API – Presentation Layer (Web API)
 Handles HTTP communication, routes, controllers, filters, and middleware.
 
 MyApp.API/
@@ -59,7 +115,7 @@ MyApp.API/
 ├── appsettings.json
 └── MyApp.API.csproj
 
-# ✅ src/MyApp.Application – Application Layer
+### ✅ src/MyApp.Application – Application Layer
 Contains business rules, use cases, interfaces, commands/queries (CQRS).
 
 MyApp.Application/
@@ -75,7 +131,7 @@ MyApp.Application/
 └── MyApp.Application.csproj
 ✅ Depends on: MyApp.Domain, MyApp.Shared
 
-# ✅ src/MyApp.Domain – Domain Layer
+### ✅ src/MyApp.Domain – Domain Layer
 Contains core business logic and models. Pure and independent.
 
 MyApp.Domain/
@@ -87,7 +143,7 @@ MyApp.Domain/
 └── MyApp.Domain.csproj
 ❌ Depends on: None
 
-# ✅ src/MyApp.Infrastructure – Infrastructure Layer
+### ✅ src/MyApp.Infrastructure – Infrastructure Layer
 Handles persistence, external APIs, email, file storage, etc.
 
 MyApp.Infrastructure/
@@ -102,7 +158,7 @@ MyApp.Infrastructure/
 └── MyApp.Infrastructure.csproj
 ✅ Depends on: MyApp.Application, MyApp.Domain, MyApp.Shared
 
-# ✅ src/MyApp.Shared – Cross-Cutting Concerns
+### ✅ src/MyApp.Shared – Cross-Cutting Concerns
 Utilities and helpers used by all layers (logging, constants, mapping, etc.)
 
 MyApp.Shared/
@@ -114,7 +170,7 @@ MyApp.Shared/
 └── MyApp.Shared.csproj
 ✅ Can be referenced by any project
 
-# ✅ tests/ – Test Projects
+### ✅ tests/ – Test Projects
 tests/MyApp.UnitTests – Unit tests
 
 MyApp.UnitTests/
@@ -132,7 +188,7 @@ MyApp.IntegrationTests/
 References: API, Infrastructure, Persistence, Shared
 
 
-# 🔄 Project References & Dependency Flow
+## 🔄 Project References & Dependency Flow
 
 API
 ├── references → Application, Infrastructure, Shared
@@ -146,7 +202,7 @@ Shared
 ├── no references
 
 
-# 🧰 Libraries & Tools (Common in Enterprise Clean Arch)
+## 🧰 Libraries & Tools (Common in Enterprise Clean Arch)
 Concern	                Library
 CQRS	                MediatR
 Validation	            FluentValidation
