@@ -1,4 +1,5 @@
 using CQRS.Application.Features.Todo.Commands;
+using CQRS.Application.Features.Todo.Handlers;
 using CQRS.Application.Features.Todo.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,12 @@ namespace CQRS.API.Controllers;
 [Route("api/[controller]")]
 public class TodosController : ControllerBase
 {
+    private readonly CreateTodoCommandHandler _handler;
     private readonly IMediator _mediator;
 
-    public TodosController(IMediator mediator)
+    public TodosController(CreateTodoCommandHandler handler, IMediator mediator)
     {
+        _handler = handler;
         _mediator = mediator;
     }
 
@@ -47,7 +50,8 @@ public class TodosController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var createdTodo = await _mediator.Send(createTodoCommand);
+        //var createdTodo = await _mediator.Send(createTodoCommand);
+        var createdTodo = await _handler.Handle(createTodoCommand, CancellationToken.None);
 
         if (createdTodo == null)
             return BadRequest("Todo creation failed.");

@@ -1,6 +1,29 @@
-@CQRS.API_HostAddress = http://localhost:5043
+@API_HostAddress = http://localhost:5043
 
-GET {{CQRS.API_HostAddress}}/weatherforecast/
-Accept: application/json
+# GET {{API_HostAddress}}/api/todos
+# Accept: application/json
+
+# GET {{API_HostAddress}}/api/todos/2
+# Accept: application/json
+
+POST {{API_HostAddress}}/api/todos
+Content-Type: application/json
+
+{
+    "description": "CQRS - unit testing using xUnit.",
+    "isDone": true
+}
+
+# PUT {{API_HostAddress}}/api/todos/2002
+# Content-Type: application/json
+
+# {
+#     "id": 2002,
+#     "description": "CQRS - unit testing using xUnit. 555",
+#     "isDone": false
+# }
+
+# DELETE {{API_HostAddress}}/api/todos/2002
+# Accept: application/json
 
 ###
