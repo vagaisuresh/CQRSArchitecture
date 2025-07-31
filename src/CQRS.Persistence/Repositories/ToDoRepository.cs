@@ -5,37 +5,37 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CQRS.Persistence.Repositories;
 
-public class ToDoRepository : RepositoryBase, IToDoRepository
+public class TodoRepository : RepositoryBase, ITodoRepository
 {
-    public ToDoRepository(AppDbContext context)
+    public TodoRepository(AppDbContext context)
         : base(context)
     {
     }
 
-    public async Task<IEnumerable<ToDoItem>> GetAllAsync()
+    public async Task<IEnumerable<TodoItem>> GetAllAsync()
     {
-        return await _context.ToDoItems
+        return await _context.TodoItems
             .AsNoTracking()
             .ToListAsync();
     }
 
-    public async Task<ToDoItem?> GetByIdAsync(int id)
+    public async Task<TodoItem?> GetByIdAsync(int id)
     {
-        return await _context.ToDoItems.FindAsync(id);
+        return await _context.TodoItems.FindAsync(id);
     }
 
-    public async Task CreateAsync(ToDoItem toDoItem)
+    public async Task CreateAsync(TodoItem todoItem)
     {
-        await _context.ToDoItems.AddAsync(toDoItem);
+        await _context.TodoItems.AddAsync(todoItem);
     }
 
-    public void UpdateAsync(ToDoItem toDoItem)
+    public void Update(TodoItem todoItem)
     {
-        _context.ToDoItems.Update(toDoItem);
+        _context.TodoItems.Update(todoItem);
     }
 
-    public void DeleteAsync(ToDoItem toDoItem)
+    public void Delete(TodoItem todoItem)
     {
-        _context.ToDoItems.Remove(toDoItem);
+        _context.TodoItems.Remove(todoItem);
     }
 }

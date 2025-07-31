@@ -1,6 +1,6 @@
 namespace CQRS.Domain.Entities;
 
-public class ToDoItem
+public class TodoItem
 {
     public int Id { get; set; }
     public required string Description { get; set; }

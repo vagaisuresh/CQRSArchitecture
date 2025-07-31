@@ -7,20 +7,19 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _context;
 
-    private IToDoRepository _toDoRepository;
+    private ITodoRepository _todoRepository;
 
     public UnitOfWork(AppDbContext context,
-        IToDoRepository toDoRepository)
+        ITodoRepository todoRepository)
     {
         _context = context;
-        _toDoRepository = toDoRepository;
+        _todoRepository = todoRepository;
     }
 
-    public IToDoRepository ToDoRepository => _toDoRepository;
+    public ITodoRepository TodoRepository => _todoRepository;
 
     public async Task SaveAsync()
     {
-        //await _context.SaveChangesAsync();
         await SaveAsync(CancellationToken.None);
     }
 

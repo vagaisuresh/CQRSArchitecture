@@ -1,8 +1,8 @@
 using CQRS.Domain.Entities;
 using MediatR;
 
-namespace CQRS.Application.Features.ToDo.Queries;
+namespace CQRS.Application.Features.Todo.Queries;
 
-public record GetToDoByIdQuery(int Id) : IRequest<ToDoItem>
+public record GetTodoByIdQuery(int Id) : IRequest<TodoItem>
 {
 }

@@ -1,12 +1,12 @@
 using MediatR;
 
-namespace CQRS.Application.Features.ToDo.Commands;
+namespace CQRS.Application.Features.Todo.Commands;
 
-public class DeleteToDoCommand : IRequest
+public class DeleteTodoCommand : IRequest
 {
     public int Id { get; set; }
 
-    public DeleteToDoCommand(int id)
+    public DeleteTodoCommand(int id)
     {
         Id = id;
     }

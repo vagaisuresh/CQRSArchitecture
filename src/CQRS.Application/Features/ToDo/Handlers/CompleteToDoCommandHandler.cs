@@ -1,26 +1,26 @@
-using CQRS.Application.Features.ToDo.Commands;
+using CQRS.Application.Features.Todo.Commands;
 using CQRS.Domain.Repositories;
 using MediatR;
 
-namespace CQRS.Application.Features.ToDo.Handlers;
+namespace CQRS.Application.Features.Todo.Handlers;
 
-public class CompleteToDoCommandHandler : IRequestHandler<CompleteToDoCommand, bool>
+public class CompleteTodoCommandHandler : IRequestHandler<CompleteTodoCommand, bool>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public CompleteToDoCommandHandler(IUnitOfWork unitOfWork)
+    public CompleteTodoCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<bool> Handle(CompleteToDoCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(CompleteTodoCommand request, CancellationToken cancellationToken)
     {
-        var todoItem = await _unitOfWork.ToDoRepository.GetByIdAsync(request.Id);
+        var todoItem = await _unitOfWork.TodoRepository.GetByIdAsync(request.Id);
         if (todoItem == null) return false;
 
         todoItem.IsDone = true;
 
-        _unitOfWork.ToDoRepository.UpdateAsync(todoItem);
+        _unitOfWork.TodoRepository.Update(todoItem);
         await _unitOfWork.SaveAsync(cancellationToken);
 
         return true;

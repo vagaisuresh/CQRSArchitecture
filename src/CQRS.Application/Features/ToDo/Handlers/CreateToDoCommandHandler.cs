@@ -1,23 +1,23 @@
-using CQRS.Application.Features.ToDo.Commands;
+using CQRS.Application.Features.Todo.Commands;
 using CQRS.Domain.Entities;
 using CQRS.Domain.Repositories;
 using MediatR;
 
-namespace CQRS.Application.Features.ToDo.Handlers;
+namespace CQRS.Application.Features.Todo.Handlers;
 
-public class CreateToDoCommandHandler(IUnitOfWork _unitOfWork) : IRequestHandler<CreateToDoCommand, ToDoItem?>
+public class CreateTodoCommandHandler(IUnitOfWork _unitOfWork) : IRequestHandler<CreateTodoCommand, TodoItem?>
 {
-    public async Task<ToDoItem?> Handle(CreateToDoCommand command, CancellationToken cancellationToken)
+    public async Task<TodoItem?> Handle(CreateTodoCommand command, CancellationToken cancellationToken)
     {
-        var toDoItem = new ToDoItem
+        var todoItem = new TodoItem
         {
             Description = command.Description,
             IsDone = true
         };
         
-        await _unitOfWork.ToDoRepository.CreateAsync(toDoItem);
+        await _unitOfWork.TodoRepository.CreateAsync(todoItem);
         await _unitOfWork.SaveAsync();
 
-        return toDoItem;
+        return todoItem;
     }
 }

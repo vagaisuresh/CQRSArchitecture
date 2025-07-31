@@ -2,11 +2,11 @@ using CQRS.Domain.Entities;
 
 namespace CQRS.Domain.Repositories;
 
-public interface IToDoRepository
+public interface ITodoRepository
 {
-    Task<IEnumerable<ToDoItem>> GetAllAsync();
-    Task<ToDoItem?> GetByIdAsync(int id);
-    Task CreateAsync(ToDoItem toDoItem);
-    void UpdateAsync(ToDoItem toDoItem);
-    void DeleteAsync(ToDoItem toDoItem);
+    Task<IEnumerable<TodoItem>> GetAllAsync();
+    Task<TodoItem?> GetByIdAsync(int id);
+    Task CreateAsync(TodoItem todoItem);
+    void Update(TodoItem todoItem);
+    void Delete(TodoItem todoItem);
 }

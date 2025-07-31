@@ -1,12 +1,12 @@
 using MediatR;
 
-namespace CQRS.Application.Features.ToDo.Commands;
+namespace CQRS.Application.Features.Todo.Commands;
 
-public class CompleteToDoCommand : IRequest<bool>
+public class CompleteTodoCommand : IRequest<bool>
 {
     public int Id { get; set; }
 
-    public CompleteToDoCommand(int id)
+    public CompleteTodoCommand(int id)
     {
         Id = id;
     }

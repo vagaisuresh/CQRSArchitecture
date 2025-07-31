@@ -1,30 +1,30 @@
 using CQRS.Application.Exceptions;
-using CQRS.Application.Features.ToDo.Commands;
+using CQRS.Application.Features.Todo.Commands;
 using CQRS.Domain.Repositories;
 using MediatR;
 
-namespace CQRS.Application.Features.ToDo.Handlers;
+namespace CQRS.Application.Features.Todo.Handlers;
 
-public class UpdateToDoCommandHandler : IRequestHandler<UpdateToDoCommand>
+public class UpdateTodoCommandHandler : IRequestHandler<UpdateTodoCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateToDoCommandHandler(IUnitOfWork unitOfWork)
+    public UpdateTodoCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(UpdateToDoCommand updateToDoCommand, CancellationToken cancellationToken)
+    public async Task Handle(UpdateTodoCommand updateTodoCommand, CancellationToken cancellationToken)
     {
-        var item = await _unitOfWork.ToDoRepository.GetByIdAsync(updateToDoCommand.Id);
+        var item = await _unitOfWork.TodoRepository.GetByIdAsync(updateTodoCommand.Id);
 
         if (item == null)
-            throw new NotFoundException("ToDo item not found");
+            throw new NotFoundException("Todo item not found");
 
-        item.Description = updateToDoCommand.Description;
-        item.IsDone = updateToDoCommand.IsDone;
+        item.Description = updateTodoCommand.Description;
+        item.IsDone = updateTodoCommand.IsDone;
 
-        _unitOfWork.ToDoRepository.UpdateAsync(item);
+        _unitOfWork.TodoRepository.Update(item);
         await _unitOfWork.SaveAsync();
     }
 }

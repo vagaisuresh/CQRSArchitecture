@@ -1,8 +1,8 @@
 using MediatR;
 
-namespace CQRS.Application.Features.ToDo.Commands;
+namespace CQRS.Application.Features.Todo.Commands;
 
-public class UpdateToDoCommand : IRequest
+public class UpdateTodoCommand : IRequest
 {
     public int Id { get; set; }
     public required string Description { get; set; }

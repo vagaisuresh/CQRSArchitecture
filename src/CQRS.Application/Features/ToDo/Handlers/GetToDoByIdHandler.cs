@@ -1,21 +1,21 @@
-using CQRS.Application.Features.ToDo.Queries;
+using CQRS.Application.Features.Todo.Queries;
 using CQRS.Domain.Entities;
 using CQRS.Domain.Repositories;
 using MediatR;
 
-namespace CQRS.Application.Features.ToDo.Handlers;
+namespace CQRS.Application.Features.Todo.Handlers;
 
-public class GetToDoByIdHandler : IRequestHandler<GetToDoByIdQuery, ToDoItem?>
+public class GetTodoByIdHandler : IRequestHandler<GetTodoByIdQuery, TodoItem?>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetToDoByIdHandler(IUnitOfWork unitOfWork)
+    public GetTodoByIdHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<ToDoItem?> Handle(GetToDoByIdQuery request, CancellationToken cancellationToken)
+    public async Task<TodoItem?> Handle(GetTodoByIdQuery request, CancellationToken cancellationToken)
     {
-        return await _unitOfWork.ToDoRepository.GetByIdAsync(request.Id);
+        return await _unitOfWork.TodoRepository.GetByIdAsync(request.Id);
     }
 }

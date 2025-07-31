@@ -9,6 +9,6 @@ public static class DependencyBindings
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
-        services.AddScoped<IToDoRepository, ToDoRepository>();
+        services.AddScoped<ITodoRepository, TodoRepository>();
     }
 }

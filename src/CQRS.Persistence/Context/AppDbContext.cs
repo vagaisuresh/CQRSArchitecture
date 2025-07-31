@@ -10,5 +10,5 @@ public class AppDbContext : DbContext
     {
     }
     
-    public DbSet<ToDoItem> ToDoItems { get; set; }
+    public DbSet<TodoItem> TodoItems { get; set; }
 }
