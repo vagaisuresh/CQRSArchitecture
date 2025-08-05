@@ -1,0 +1,46 @@
+@page "/todo"
+@using CQRS.BlazorUI.Components.Todo
+@using CQRS.BlazorUI.Models
+
+<PageTitle>Todo</PageTitle>
+
+<h1>To-Dos</h1>
+<TodoForm OnAdd="AddTodo"></TodoForm>
+
+@if (todoItems != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th aria-label="Todo Description">To-do</th>
+                <th aria-label="Status of Todo">Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var todo in todoItems)
+            {
+                <tr>
+                    <td>@todo.Description</td>
+                    <td>@(todo.IsDone ? "Yes" : "Pending")</td>
+                    <td>
+                        <button class="btn btn-primary">Done</button>
+                        <button class="btn btn-danger">Remove</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>Todo Count: <span>@todoCount</span></p>
+}
+
+@code {
+    private List<TodoItem> todoItems = new();
+    private int todoCount = 0;
+
+    private void AddTodo(TodoItem todoItem)
+    {
+        todoItems.Add(todoItem);
+        todoCount = todoItems.Count(todo => !todo.IsDone);
+    }
+}

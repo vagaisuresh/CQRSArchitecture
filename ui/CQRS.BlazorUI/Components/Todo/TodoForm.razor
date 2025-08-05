@@ -1,0 +1,30 @@
+@using System.ComponentModel.DataAnnotations
+@using CQRS.BlazorUI.Models
+
+<EditForm Model="@todoItem" OnValidSubmit="@SendAddTodo">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="todo" class="form-label">To-do</label>
+        <div class="input-group">
+            <InputText id="todo" class="form-control" @bind-Value="todoItem.Description" />
+            <button type="submit" class="btn btn-primary">Add To-do</button>
+        </div>
+        <ValidationMessage For="@(() => todoItem.Description)" />
+    </div>
+</EditForm>
+
+@code {
+    private TodoItem todoItem = new();
+
+    [Parameter]
+    public EventCallback<TodoItem> OnAdd { get; set; }
+    
+    private async Task SendAddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(todoItem.Description))
+        {
+            await OnAdd.InvokeAsync(todoItem);
+            todoItem = new();
+        }
+    }
+}
