@@ -23,6 +23,7 @@
     {
         if (!string.IsNullOrWhiteSpace(todoItem.Description))
         {
+            todoItem.Id = 0;
             await OnAdd.InvokeAsync(todoItem);
             todoItem = new();
         }

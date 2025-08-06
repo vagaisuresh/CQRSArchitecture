@@ -1,0 +1,50 @@
+@using CQRS.BlazorUI.Models
+
+@if (todoItems != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th aria-label="Todo Description">To-do</th>
+                <th aria-label="Status of Todo">Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var todo in todoItems)
+            {
+                <tr>
+                    <td>@todo.Description</td>
+                    <td>@(todo.IsDone ? "Done" : "Pending")</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => SendDoneTodo(todo.Id)">Done</button>
+                        <button class="btn btn-danger" @onclick="() => SendRemoveTodo(todo.Id)">Remove</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>Todo Count: <span>@todoCount</span></p>
+}
+
+@code {
+    [Parameter]
+    public int todoCount { get; set; }
+    [Parameter]
+    public List<TodoItem> todoItems { get; set; } = new List<TodoItem>();
+    
+    [Parameter]
+    public EventCallback<int> OnDone { get; set; }
+    [Parameter]
+    public EventCallback<int> OnRemove { get; set; }
+    
+    public async Task SendDoneTodo(int id)
+    {
+        await OnDone.InvokeAsync(id);
+    }
+
+    public async Task SendRemoveTodo(int id)
+    {
+        await OnRemove.InvokeAsync(id);
+    }
+}

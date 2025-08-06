@@ -5,42 +5,53 @@
 <PageTitle>Todo</PageTitle>
 
 <h1>To-Dos</h1>
-<TodoForm OnAdd="AddTodo"></TodoForm>
+<TodoForm 
+    OnAdd="AddTodo">
+</TodoForm>
 
-@if (todoItems != null)
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th aria-label="Todo Description">To-do</th>
-                <th aria-label="Status of Todo">Status</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var todo in todoItems)
-            {
-                <tr>
-                    <td>@todo.Description</td>
-                    <td>@(todo.IsDone ? "Yes" : "Pending")</td>
-                    <td>
-                        <button class="btn btn-primary">Done</button>
-                        <button class="btn btn-danger">Remove</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <p>Todo Count: <span>@todoCount</span></p>
-}
+<TodoTable 
+    todoCount="@todoCount" 
+    todoItems="@todoItems" 
+    OnDone="DoneTodo" 
+    OnRemove="RemoveTodo">
+</TodoTable>
 
 @code {
     private List<TodoItem> todoItems = new();
+    private int nextId = 1;
     private int todoCount = 0;
 
     private void AddTodo(TodoItem todoItem)
     {
-        todoItems.Add(todoItem);
-        todoCount = todoItems.Count(todo => !todo.IsDone);
+        todoItem.Id = nextId++;     // ASSIGN the id and then increment
+        todoItems.Add(todoItem);    // ADD to the collection (List)
+        CountTheTodo();             // RESET the count
+    }
+
+    private void RemoveTodo(int id)
+    {
+        var item = todoItems.FirstOrDefault(f => f.Id == id);
+
+        if (item != null)
+        {
+            todoItems.Remove(item);
+            CountTheTodo();
+        }
+    }
+
+    private void DoneTodo(int id)
+    {
+        var item = todoItems.FirstOrDefault(f => f.Id == id);
+
+        if (item != null)
+        {
+            item.IsDone = true;
+            CountTheTodo();
+        }
+    }
+
+    private void CountTheTodo()
+    {
+        todoCount = todoItems.Count(toto => !toto.IsDone);
     }
 }
