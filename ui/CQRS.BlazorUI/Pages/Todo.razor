@@ -1,0 +1,100 @@
+@page "/todo"
+@using CQRS.BlazorUI.Components.Todo
+@using CQRS.BlazorUI.HttpRepositories
+@using CQRS.BlazorUI.Models
+@using System.Threading.Tasks
+
+<PageTitle>To-Do</PageTitle>
+
+<h1>To-Dos</h1>
+
+<TodoForm 
+    OnAdd="AddTodoAsync">
+</TodoForm>
+
+<TodoTable 
+    todoItems="todoItems" 
+    todoCount="todoCount" 
+    OnDone="DoneTodoAsync" 
+    OnRemove="RemoveTodoAsync">
+</TodoTable>
+
+@code {
+    private List<TodoItem> todoItems = new();
+    private int nextId = 0;
+    private int todoCount = 0;
+
+    [Inject]
+    public ITodoHttpRepository? todoHttpRepository { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (todoHttpRepository != null)
+        {
+            var todos = await todoHttpRepository.GetAllAsync();
+
+            if (todos != null)
+            {
+                todoItems = todos;
+                nextId = todoItems.Any() ? todoItems.Max(todo => todo.Id) + 1 : 1;
+                CountTheTodo();
+            }
+        }
+    }
+
+    private async Task AddTodoAsync(TodoItem todoItem)
+    {
+        if (todoHttpRepository != null)
+        {
+            todoItem.IsDone = false;
+            
+            var todo = await todoHttpRepository.PostAsync(todoItem);
+
+            todoItems.Add(todo);
+            CountTheTodo();
+        }
+    }
+
+    private async Task RemoveTodoAsync(int id)
+    {
+        if (todoHttpRepository != null)
+        {
+            var result = await todoHttpRepository.DeleteAsync(id);
+
+            if (result)
+            {
+                var todo = todoItems.FirstOrDefault(a => a.Id == id);
+
+                if (todo != null)
+                {
+                    todoItems.Remove(todo);
+                    CountTheTodo();
+                }
+            }
+        }
+    }
+
+    private async Task DoneTodoAsync(int id)
+    {
+        if (todoHttpRepository != null)
+        {
+            var result = await todoHttpRepository.CompleteAsync(id);
+
+            if (result)
+            {
+                var todo = todoItems.FirstOrDefault(a => a.Id == id);
+
+                if (todo != null)
+                {
+                    todo.IsDone = true;
+                    CountTheTodo();
+                }
+            }
+        }
+    }
+
+    private void CountTheTodo()
+    {
+        todoCount = todoItems.Count(toto => !toto.IsDone);
+    }
+}
