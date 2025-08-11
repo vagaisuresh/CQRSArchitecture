@@ -12,7 +12,7 @@ public class CreateTodoCommandHandler(IUnitOfWork _unitOfWork) : IRequestHandler
         var todoItem = new TodoItem
         {
             Description = command.Description,
-            IsDone = true
+            IsDone = false
         };
         
         await _unitOfWork.TodoRepository.CreateAsync(todoItem);

@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureSqlContext();
 builder.Services.ConfigureMediatR();
 builder.Services.ConfigureDependencyBindings();
+builder.Services.ConfigureCors();
 
 builder.Services.AddOpenApi();
 
@@ -21,6 +22,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("AllowAll");
 
 app.MapControllers();
 

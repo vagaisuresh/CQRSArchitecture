@@ -1,3 +1,4 @@
+using CQRS.Application.Features.Todo.Handlers;
 using CQRS.Domain.Repositories;
 using CQRS.Persistence.Repositories;
 
@@ -10,5 +11,6 @@ public static class DependencyBindings
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         services.AddScoped<ITodoRepository, TodoRepository>();
+        services.AddScoped<CreateTodoCommandHandler>();
     }
 }

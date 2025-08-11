@@ -14,4 +14,18 @@ public static class ServiceRegistrations
 
         services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
     }
+
+    public static void ConfigureCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll",
+                policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+        });
+    }
 }
