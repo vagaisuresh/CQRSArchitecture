@@ -4,7 +4,7 @@
 ---
 
 
-# CQRS and MediatR in ASP.NET Core
+# A Clean Architecture implementation using the CQRS pattern with MediatR in ASP.NET Core.
 
 An implementation of **Clean Architecture** using CQRS (Command Query Responsibility Segregation) pattern and MediatR library in **ASP.NET Core**, structured to promote scalability, maintainability, and testability. This project demonstrates the separation of concerns through clearly defined layers—**Domain, Application, Infrastructure,** and **API**—and follows industry best practices such as the **Repository pattern, Unit of Work,** and **SOLID principles**, making the codebase modular and easy to extend.
 
@@ -24,9 +24,11 @@ An implementation of **Clean Architecture** using CQRS (Command Query Responsibi
 
 - **ASP.NET Core Web API**
 - **Entity Framework Core**
-- **SQL Server**
+- **CQRS Pattern with MediatR**
 - **IUnitOfWork & Repository Pattern**
 - **SOLID Principles**
+- **Blazor WebAssembly (WASM)**
+- **SQL Server**
 
 ---
 
