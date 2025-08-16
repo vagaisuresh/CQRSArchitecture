@@ -1,12 +1,12 @@
-using CQRS.API.DIs;
-using CQRS.Application.DIs;
+using CQRS.API.DependencyInjection;
+using CQRS.Application.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.ConfigureSqlContext();
-builder.Services.ConfigureMediatR();
-builder.Services.ConfigureDependencyBindings();
-builder.Services.ConfigureCors();
+builder.Services.AddAppDbContext();
+builder.Services.AddAppMediatR();
+builder.Services.AddAppServices();
+builder.Services.AddAppCors();
 
 builder.Services.AddOpenApi();
 

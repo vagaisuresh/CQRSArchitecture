@@ -1,11 +1,22 @@
+using CQRS.Application.Features.Todo.Handlers;
+using CQRS.Domain.Repositories;
 using CQRS.Persistence.Context;
+using CQRS.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace CQRS.API.DIs;
+namespace CQRS.API.DependencyInjection;
 
 public static class ServiceRegistrations
 {
-    public static void ConfigureSqlContext(this IServiceCollection services)
+    public static void AddAppServices(this IServiceCollection services)
+    {
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddScoped<ITodoRepository, TodoRepository>();
+        services.AddScoped<CreateTodoCommandHandler>();
+    }
+
+    public static void AddAppDbContext(this IServiceCollection services)
     {
         string connectionString = Environment.GetEnvironmentVariable("SqlConnection__CleanArchitecture") ?? string.Empty;
 
@@ -15,7 +26,7 @@ public static class ServiceRegistrations
         services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
     }
 
-    public static void ConfigureCors(this IServiceCollection services)
+    public static void AddAppCors(this IServiceCollection services)
     {
         services.AddCors(options =>
         {
